@@ -8,9 +8,6 @@
 - **MCP Server**：提供 Stdio、SSE、Streamable HTTP 三种独立入口，共享 `web_search` 和
   `web_fetch` 两个标准 MCP Tool。
 
-实现参考了飞书文档《MCP 详解》的 Host-Client-Server 分层、动态能力发现和传输层生命周期，
-也复用了 `~/own/a2a_demo` 中的多模型工厂、环境变量校验、LangSmith 和本地调试模式。
-
 ## 架构
 
 ```text
