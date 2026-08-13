@@ -1,0 +1,8 @@
+{
+  "node_version": "20",
+  "dependencies": ["."],
+  "graphs": {
+    "host_agent": "./src/host-agent-studio.ts:graph"
+  },
+  "env": ".env"
+}
