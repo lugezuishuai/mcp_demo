@@ -14,14 +14,20 @@ describe("loadConfig", () => {
     expect(config.modelProvider).toBe(expected);
   });
 
-  it("uses the provider-specific model key and fixed LangSmith project", () => {
+  it("uses the provider-specific model key and overridable LangSmith project", () => {
     const config = loadConfig({
       MODEL_PROVIDER: "claude",
       ANTHROPIC_API_KEY: "anthropic-key",
-      LANGSMITH_PROJECT: "should-not-override",
+      LANGSMITH_PROJECT: "custom-project",
     });
 
     expect(config.apiKey).toBe("anthropic-key");
+    expect(config.langSmithProject).toBe("custom-project");
+  });
+
+  it("defaults the LangSmith project to mcp_demo", () => {
+    const config = loadConfig({ API_KEY: "test-key" });
+
     expect(config.langSmithProject).toBe("mcp_demo");
   });
 

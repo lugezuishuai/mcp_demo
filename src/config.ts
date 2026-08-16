@@ -43,6 +43,7 @@ const environmentSchema = z.object({
   WEB_SEARCH_MAX_RESULTS: z.coerce.number().int().min(1).max(10).default(5),
   WEB_FETCH_MAX_CHARACTERS: z.coerce.number().int().min(1_000).max(100_000).default(20_000),
   LANGSMITH_API_KEY: optionalString,
+  LANGSMITH_PROJECT: z.string().min(1).optional(),
   SYSTEM_PROMPT: z
     .string()
     .min(1)
@@ -76,8 +77,8 @@ export interface AppConfig {
   webSearchMaxResults: number;
   webFetchMaxCharacters: number;
   langSmithApiKey?: string;
-  /** LangSmith 项目名按需求固定，避免 CLI 与 Studio 产生不同项目。 */
-  langSmithProject: "mcp_demo";
+  /** LangSmith 项目名，默认 mcp_demo，可用 LANGSMITH_PROJECT 覆盖。 */
+  langSmithProject: string;
   systemPrompt: string;
 }
 
@@ -127,7 +128,7 @@ export function loadConfig(environment: NodeJS.ProcessEnv = process.env, options
     webSearchMaxResults: parsed.WEB_SEARCH_MAX_RESULTS,
     webFetchMaxCharacters: parsed.WEB_FETCH_MAX_CHARACTERS,
     ...(parsed.LANGSMITH_API_KEY ? { langSmithApiKey: parsed.LANGSMITH_API_KEY } : {}),
-    langSmithProject: "mcp_demo",
+    langSmithProject: parsed.LANGSMITH_PROJECT ?? "mcp_demo",
     systemPrompt: parsed.SYSTEM_PROMPT,
   };
 }
